@@ -32,7 +32,7 @@ namespace Test1.Implementation
         public async Task<bool> Delete(string Id)
         {
             var employee = await _context.employee.FindAsync(Id);
-            if (employee != null) return false;
+            if (employee == null) return false;
 
             _context.employee.Remove(employee);
             await _context.SaveChangesAsync();
@@ -75,13 +75,10 @@ namespace Test1.Implementation
 
             if (record == null) return false;
 
-            var updated = new Employee()
-            {
-                EmployeeId = record.EmployeeId,
-                Name = record.Name,
-                Address = record.Address,
-                Age = record.Age
-            };
+            record.Name = employee.Name;
+            record.Address = employee.Address;
+            record.Age = employee.Age;
+            
 
             _context.Update(record);
             await _context.SaveChangesAsync();
